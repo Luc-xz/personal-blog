@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light dark; }
+
+html, body { height: 100%; }
+body { @apply bg-white text-gray-900 dark:bg-neutral-950 dark:text-neutral-100; }
+
+/* 页面过渡与动画的基础 class，可用于 Framer Motion 搭配 */
+.fade-in { @apply opacity-0 animate-[fadeIn_0.6s_ease-out_forwards]; }
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+
