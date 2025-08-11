@@ -1,8 +1,8 @@
-import Link from 'next/link'
+
 import { prisma } from '@/lib/db'
 import type { Metadata } from 'next'
-import { HeroSection } from '@/components/HeroSection'
-import { PostCard } from '@/components/PostCard'
+import { HeroSection } from '@/components/site/HeroSection'
+import { PostCard } from '@/components/site/PostCard'
 
 export const metadata: Metadata = {
   title: '首页',

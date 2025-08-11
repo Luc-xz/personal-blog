@@ -18,6 +18,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Link href="/admin/comments" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                   评论管理
                 </Link>
+                <Link href="/admin/categories" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  分类管理
+                </Link>
+                <Link href="/admin/tags" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  标签管理
+                </Link>
+                <Link href="/admin/settings" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  站点设置
+                </Link>
               </div>
             </div>
             <div className="flex items-center space-x-4">

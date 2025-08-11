@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/db'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { CommentSection } from '@/components/CommentSection'
+import { CommentSection } from '@/components/site/CommentSection'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
