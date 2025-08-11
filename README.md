@@ -280,7 +280,28 @@ pnpm start
 
 ## 🚀 部署指南
 
-### 云服务器部署
+### 📖 详细部署教程
+
+我们为不同技术水平的用户准备了详细的部署教程：
+
+- **[📚 完整部署教程（小白版）](docs/04-deployment-tutorial.md)** - 适合完全不懂技术的用户，每一步都有详细说明
+- **[⚡ 5分钟快速部署指南](docs/05-quick-deploy-guide.md)** - 适合有一定基础的用户，快速上线
+- **[🛠️ 开发指南](docs/02-development-guide.md)** - 适合开发者，包含开发环境搭建和自定义开发
+
+### 🎯 一键部署（推荐）
+
+我们提供了自动化部署脚本，让部署变得超级简单：
+
+```bash
+# 上传代码到服务器后，运行一键部署脚本
+cd /var/www/blog
+chmod +x scripts/deploy.sh
+sudo bash scripts/deploy.sh
+```
+
+### 手动部署（简化版）
+
+如果你有一定基础，也可以手动部署：
 
 #### 1. 服务器准备
 ```bash
@@ -309,7 +330,7 @@ cp .env.example .env
 # 编辑 .env 文件
 
 # 初始化数据库
-pnpm db:init
+pnpm run init
 
 # 构建应用
 pnpm build
