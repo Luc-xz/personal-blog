@@ -11,3 +11,20 @@ body { @apply bg-white text-gray-900 dark:bg-neutral-950 dark:text-neutral-100; 
 .fade-in { @apply opacity-0 animate-[fadeIn_0.6s_ease-out_forwards]; }
 @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
 
+/* 支持 prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 文本截断 */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+

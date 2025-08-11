@@ -18,10 +18,15 @@
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",
+    "@types/mime-types": "^3.0.1",
+    "@types/multer": "^2.0.0",
+    "@types/uuid": "^10.0.0",
     "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.1",
     "framer-motion": "^12.23.12",
     "jose": "^6.0.12",
+    "mime-types": "^3.0.1",
+    "multer": "^2.0.2",
     "next": "^15.4.6",
     "pino": "^9.8.0",
     "react": "^19.1.1",
@@ -37,6 +42,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "unified": "^11.0.5",
+    "uuid": "^11.1.0",
     "zod": "^4.0.15"
   },
   "devDependencies": {
