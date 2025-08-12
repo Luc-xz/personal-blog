@@ -24,7 +24,7 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
-      data: categories.map(cat => ({
+      data: categories.map((cat: any) => ({
         ...cat,
         postCount: cat.posts.length
       }))

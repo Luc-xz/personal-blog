@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
-import { z } from 'zod'
+import { any, z } from 'zod'
 
 const tagSchema = z.object({
   name: z.string().min(1).max(30),
@@ -23,7 +23,7 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
-      data: tags.map(tag => ({
+      data: tags.map((tag: any) => ({
         ...tag,
         postCount: tag.posts.length
       }))
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const validationResult = tagSchema.safeParse(body)
-    
+
     if (!validationResult.success) {
       return NextResponse.json({
         success: false,
@@ -105,9 +105,9 @@ export async function DELETE(request: NextRequest) {
     if (postsUsingTags.length > 0) {
       return NextResponse.json({
         success: false,
-        error: { 
-          code: 'TAG_IN_USE', 
-          message: '无法删除正在使用的标签，请先移除相关文章的标签关联' 
+        error: {
+          code: 'TAG_IN_USE',
+          message: '无法删除正在使用的标签，请先移除相关文章的标签关联'
         }
       }, { status: 400 })
     }

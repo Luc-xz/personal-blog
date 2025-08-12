@@ -15,7 +15,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # 生成 Prisma 客户端
-RUN pnpm db:generate
+RUN pnpm prisma:generate
 
 # 构建应用
 RUN pnpm build

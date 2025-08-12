@@ -58,30 +58,35 @@ export async function POST(request: NextRequest) {
       await tx.category.deleteMany()
       await tx.siteConfig.deleteMany()
 
+      // 创建ID映射
+      const categoryIdMap = new Map<number, number>()
+      const tagIdMap = new Map<number, number>()
+      const postIdMap = new Map<number, number>()
+
       // 导入分类
       if (dbData.data.categories?.length > 0) {
         for (const category of dbData.data.categories) {
-          await tx.category.create({
+          const newCategory = await tx.category.create({
             data: {
-              id: category.id,
               name: category.name,
               slug: category.slug,
               description: category.description
             }
           })
+          categoryIdMap.set(category.id, newCategory.id)
         }
       }
 
       // 导入标签
       if (dbData.data.tags?.length > 0) {
         for (const tag of dbData.data.tags) {
-          await tx.tag.create({
+          const newTag = await tx.tag.create({
             data: {
-              id: tag.id,
               name: tag.name,
               slug: tag.slug
             }
           })
+          tagIdMap.set(tag.id, newTag.id)
         }
       }
 
@@ -90,41 +95,47 @@ export async function POST(request: NextRequest) {
         for (const post of dbData.data.posts) {
           const createdPost = await tx.post.create({
             data: {
-              id: post.id,
               title: post.title,
               slug: post.slug,
               summary: post.summary,
-              content: post.content,
+              contentMd: post.content,
               contentHtml: post.contentHtml,
               coverUrl: post.coverUrl,
               status: post.status,
-              publishedAt: post.publishedAt ? new Date(post.publishedAt) : null,
-              createdAt: new Date(post.createdAt),
-              updatedAt: new Date(post.updatedAt)
+              publishedAt: post.publishedAt ? new Date(post.publishedAt) : null
             }
           })
+
+          // 保存新旧ID映射
+          postIdMap.set(post.id, createdPost.id)
 
           // 导入文章分类关联
           if (post.categories?.length > 0) {
             for (const pc of post.categories) {
-              await tx.postCategory.create({
-                data: {
-                  postId: createdPost.id,
-                  categoryId: pc.categoryId
-                }
-              })
+              const newCategoryId = categoryIdMap.get(pc.categoryId)
+              if (newCategoryId) {
+                await tx.postCategory.create({
+                  data: {
+                    postId: createdPost.id,
+                    categoryId: newCategoryId
+                  }
+                })
+              }
             }
           }
 
           // 导入文章标签关联
           if (post.tags?.length > 0) {
             for (const pt of post.tags) {
-              await tx.postTag.create({
-                data: {
-                  postId: createdPost.id,
-                  tagId: pt.tagId
-                }
-              })
+              const newTagId = tagIdMap.get(pt.tagId)
+              if (newTagId) {
+                await tx.postTag.create({
+                  data: {
+                    postId: createdPost.id,
+                    tagId: newTagId
+                  }
+                })
+              }
             }
           }
         }
@@ -133,18 +144,19 @@ export async function POST(request: NextRequest) {
       // 导入评论
       if (dbData.data.comments?.length > 0) {
         for (const comment of dbData.data.comments) {
-          await tx.comment.create({
-            data: {
-              id: comment.id,
-              postId: comment.postId,
-              author: comment.author,
-              email: comment.email,
-              content: comment.content,
-              status: comment.status,
-              ipHash: comment.ipHash,
-              createdAt: new Date(comment.createdAt)
-            }
-          })
+          const newPostId = postIdMap.get(comment.postId)
+          if (newPostId) {
+            await tx.comment.create({
+              data: {
+                postId: newPostId,
+                author: comment.author,
+                email: comment.email,
+                content: comment.content,
+                status: comment.status,
+                ipHash: comment.ipHash
+              }
+            })
+          }
         }
       }
 

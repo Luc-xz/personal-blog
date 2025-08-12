@@ -7,7 +7,7 @@ const siteSettingsSchema = z.object({
   description: z.string().max(500),
   keywords: z.string().max(200).optional(),
   author: z.string().max(50).optional(),
-  baseUrl: z.string().url().optional(),
+  baseUrl: z.string().optional(),
   aboutContent: z.string().optional()
 })
 
@@ -108,12 +108,12 @@ export async function PUT() {
 
     const recentPosts = await prisma.post.findMany({
       take: 5,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { updatedAt: 'desc' },
       select: {
         id: true,
         title: true,
         status: true,
-        createdAt: true
+        updatedAt: true
       }
     })
 
